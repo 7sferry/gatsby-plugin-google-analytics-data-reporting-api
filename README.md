@@ -1,0 +1,1 @@
+# gatsby-plugin-google-analytics-data-reporting-api
