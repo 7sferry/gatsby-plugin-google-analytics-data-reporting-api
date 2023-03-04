@@ -35,10 +35,6 @@ plugins: [{
 }]
 ```
 
-## When do I use this plugin?
-
-Include stories about when this plugin is helpful and/or necessary.
-
 ## Examples of usage
 
 query the page views like this:
