@@ -13,7 +13,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, plu
   const jwt = new google.auth.JWT(
       pluginOptions.serviceAccountEmail,
       null,
-      pluginOptions.privateKey,
+      pluginOptions.privateKey.replace(/\\n/gm, "\n"),
       scopes
   );
   await jwt.authorize();
