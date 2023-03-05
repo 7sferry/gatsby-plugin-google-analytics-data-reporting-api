@@ -4,8 +4,8 @@
 
 This is Reporting API plugin to get your page views count from Google Analytics Data API (GA4). I used to
 use "https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics-reporter" for my blog, but it's only support
-Universal Analytics v4. Since Universal Analytics would be deprecated soon, and I didn't found the replacement for this
-plugin yet, I decide to create one.
+Universal Analytics v4. Since Universal Analytics would be deprecated soon, and I didn't found the replacement for GA4
+yet, so I decide to create one.
 
 ## How to install
 
@@ -24,7 +24,7 @@ plugins: [{
 
     resolve: `gatsby-plugin-google-analytics-data-reporting-api`,
     options: {
-        serviceAccountEmail: process.env.ANALYTICS_EMAIL, //required. it's your service account email, like xxx.iam.gserviceaccount.com
+        serviceAccountEmail: process.env.ANALYTICS_EMAIL, //required. it's your service account email, like xxx@xxx.iam.gserviceaccount.com
         privateKey: process.env.ANALYTICS_PRIVATE_KEY, //required. it's your private key from google cloud console. download the json, and copy paste the private_key here. start from "-----BEGIN PRIVATE KEY-----" 
         property: process.env.ANALYTICS_GA4, //require. it's your GA4 property id
         startDate: `1970-01-01`, //optional, you can skip this. default: "1970-01-01". value is based on Google Analytics date value
@@ -72,4 +72,5 @@ the response would be this:
 ```
 
 ## How to contribute
+
 any ideas or recommendations are welcome.
