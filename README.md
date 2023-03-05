@@ -20,20 +20,42 @@ yet, so I decide to create one.
 
 ```js
 plugins: [{
-    //any plugins...
+    //other plugins...
 
     resolve: `gatsby-plugin-google-analytics-data-reporting-api`,
     options: {
-        serviceAccountEmail: process.env.ANALYTICS_EMAIL, //required. it's your service account email, like xxx@xxx.iam.gserviceaccount.com
-        privateKey: process.env.ANALYTICS_PRIVATE_KEY, //required. it's your private key from google cloud console. download the json, and copy paste the private_key here. start from "-----BEGIN PRIVATE KEY-----" 
-        property: process.env.ANALYTICS_GA4, //require. it's your GA4 property id
-        startDate: `1970-01-01`, //optional, you can skip this. default: "1970-01-01". value is based on Google Analytics date value
-        endDate: `yesterday`, //optional, you can skip this. default: "today". value is based on Google Analytics date value
-        limit: 100, //optional, you can skip this. default: no limit.
-        desc: true //optional, you can skip this. default: true
+        serviceAccountEmail: process.env.ANALYTICS_EMAIL,
+        privateKey: process.env.ANALYTICS_PRIVATE_KEY, 
+        property: process.env.ANALYTICS_GA4,
+        startDate: `1970-01-01`, 
+        endDate: `yesterday`,
+        limit: 100,
+        desc: true
     }
 }]
 ```
+
+## Options
+### serviceAccountEmail
+required. it's your service account email, like xxx@xxx.iam.gserviceaccount.com.
+
+### privateKey
+required. it's your private key from google cloud console. download the json, and copy and paste the "private_key" here. it's start with "-----BEGIN PRIVATE KEY-----".
+
+### property
+required. it's your GA4 property id from Google Analytics Page.
+
+### startDate
+optional. you can skip this option. it's based on Google Analytics date value. Could be '30daysAgo', 'today', 'yesterday', or ISO date format (yyyy-MM-dd) like '2022-12-31'. Default value is '1970-01-01'.
+
+### endDate
+optional. you can skip this option. it's based on Google Analytics date value. Could be '30daysAgo', 'today', 'yesterday', or ISO date format (yyyy-MM-dd) like '2022-12-31'. Default value is 'today'.
+
+### limit
+optional. you can skip this option. it's to limit data fetch from the API. Default value is null which means no limit.
+
+### desc
+optional. you can skip this option. it's boolean value to determine you want to order the result by ascending or descending. Default value is true.
 
 ## Examples of usage
 

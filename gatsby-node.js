@@ -30,7 +30,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, plu
       metrics: [{ name: "screenPageViews" }],
       dateRanges: [{ startDate: pluginOptions.startDate || '1970-01-01', endDate: pluginOptions.endDate || 'today' }],
       limit: pluginOptions.limit,
-      orderBys: [{ metric: { metricName: "screenPageViews" }, desc: pluginOptions.desc || true }],
+      orderBys: [{ metric: { metricName: "screenPageViews" }, desc: pluginOptions.desc === true }],
     },
   }).then((report) => {
     report.data.rows.forEach(row => {
