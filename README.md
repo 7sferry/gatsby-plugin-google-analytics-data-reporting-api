@@ -34,6 +34,7 @@ plugins: [{
     }
 }]
 ```
+I recommend you to set the sensitive value above in environment variables, or use "(dot)env" in local for security. 
 
 ## Options
 ### serviceAccountEmail
