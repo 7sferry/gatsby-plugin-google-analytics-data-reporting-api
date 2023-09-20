@@ -6,7 +6,7 @@
   "author": "Ferry Suhandri",
   "license": "MIT",
   "dependencies": {
-    "googleapis": "^120.0.0"
+    "googleapis": "^126.0.1"
   },
   "keywords": [
     "gatsby",
