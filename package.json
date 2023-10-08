@@ -8,6 +8,9 @@
   "dependencies": {
     "googleapis": "^126.0.1"
   },
+  "scripts": {
+    "version": ""
+  },
   "keywords": [
     "gatsby",
     "gatsby-plugin",
