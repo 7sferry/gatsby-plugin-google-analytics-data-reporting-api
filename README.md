@@ -46,7 +46,7 @@ required. it's your service account email, like xxx@xxx.iam.gserviceaccount.com.
 
 ### privateKey
 
-required. it's your private key from google cloud console. download the json, and copy and paste the "private_key" here.
+required. it's your private key from Google cloud console. download the json, and copy and paste the "private_key" here.
 it's start with "-----BEGIN PRIVATE KEY-----".
 
 ### property
@@ -56,7 +56,9 @@ required. it's your GA4 property id from Google Analytics Page.
 ### startDate
 
 optional. you can skip this option. it's based on Google Analytics date value. Could be '30daysAgo', 'today', '
-yesterday', or ISO date format (yyyy-MM-dd) like '2022-12-31'. Default value is '1970-01-01'.
+yesterday', or ISO date format (yyyy-MM-dd) like '2022-12-31'. Since v1.2.0 Default value is '2005-01-01' because
+Google Analytics 4 say so. If you still use version <= 1.1.0 you should upgrade to newer version or specify startDate in
+your gatsby-config.
 
 ### endDate
 
