@@ -27,7 +27,7 @@ plugins: [{
     serviceAccountEmail: process.env.ANALYTICS_EMAIL,
     privateKey: process.env.ANALYTICS_PRIVATE_KEY,
     property: process.env.ANALYTICS_GA4,
-    startDate: `1970-01-01`,
+    startDate: `2005-01-01`,
     endDate: `yesterday`,
     limit: 100,
     metric: `screenPageViews`,
@@ -56,9 +56,9 @@ required. it's your GA4 property id from Google Analytics Page.
 ### startDate
 
 optional. you can skip this option. it's based on Google Analytics date value. Could be '30daysAgo', 'today', '
-yesterday', or ISO date format (yyyy-MM-dd) like '2022-12-31'. Since v1.2.0 Default value is '2005-01-01' because
-Google Analytics 4 say so. If you still use version <= 1.1.0 you should upgrade to newer version or specify startDate in
-your gatsby-config.
+yesterday', or ISO date format (yyyy-MM-dd) like '2022-12-31'. Since v1.2.0 Default value is '2005-01-01' because new
+Google API changed it. If you still use version <= 1.1.0 you should specify 'startDate' in your gatsby-config or
+upgrade to newer version.
 
 ### endDate
 
