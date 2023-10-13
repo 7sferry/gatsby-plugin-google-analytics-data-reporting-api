@@ -29,7 +29,7 @@ exports.sourceNodes = async ({actions, createNodeId, createContentDigest}, plugi
     requestBody: {
       dimensions: [{name: "pagePath"}],
       metrics: [{name: metric}],
-      dateRanges: [{startDate: pluginOptions.startDate, endDate: pluginOptions.endDate}],
+      dateRanges: [{startDate: pluginOptions.startDate || '30daysAgo', endDate: pluginOptions.endDate || 'today'}],
       limit: pluginOptions.limit,
       orderBys: [{metric: {metricName: metric}, desc: pluginOptions.desc === true}],
     },

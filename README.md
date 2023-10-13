@@ -55,13 +55,15 @@ required. it's your GA4 property id from Google Analytics Page.
 
 ### startDate
 
-required since v1.3.0. it's based on Google Analytics date value. Could be '30daysAgo', 'today', '
-yesterday', or ISO date format (yyyy-MM-dd) like '2022-12-31'.
+required since v1.3.0. it's based on Google Analytics date value. Could be '30daysAgo', 'today', 'yesterday', or ISO
+date format (yyyy-MM-dd) like '2022-12-31'. Default value '365daysAgo'. Google changed its API and for version < v1.3.0
+using startDate default value will throw error. Since v1.3.0 I encourage to specify your startDate in config or use
+dynamic value like '365daysAgo'.
 
 ### endDate
 
-required since v1.3.0. it's based on Google Analytics date value. Could be '30daysAgo', 'today', '
-yesterday', or ISO date format (yyyy-MM-dd) like '2022-12-31'.
+required since v1.3.0. it's based on Google Analytics date value. Could be '30daysAgo', 'today', 'yesterday', or ISO
+date format (yyyy-MM-dd) like '2022-12-31'. Default value 'today'. Since v1.3.0 I encourage to specify your endDate.
 
 ### metric
 
