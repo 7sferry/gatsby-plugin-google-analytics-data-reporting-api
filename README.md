@@ -119,6 +119,9 @@ the response would be this:
 }
 ```
 
+## Changelogs
+See: https://github.com/7sferry/gatsby-plugin-google-analytics-data-reporting-api/releases
+
 ## How to contribute
 
 any ideas or recommendations are welcome.
