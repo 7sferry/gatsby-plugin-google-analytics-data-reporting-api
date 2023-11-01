@@ -6,7 +6,7 @@
   "author": "Ferry Suhandri",
   "license": "MIT",
   "dependencies": {
-    "googleapis": "^126.0.1"
+    "googleapis": "^128.0.0"
   },
   "scripts": {
     "postversion": "npm info"
