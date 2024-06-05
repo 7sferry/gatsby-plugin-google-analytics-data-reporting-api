@@ -1,4 +1,4 @@
-const { google } = require('googleapis');
+const {google} = require('googleapis');
 
 const scopes = [
   // View and manage your Google Analytics data
@@ -8,8 +8,8 @@ const scopes = [
   "https://www.googleapis.com/auth/analytics.readonly",
 ];
 
-exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, pluginOptions) => {
-  const { createNode } = actions;
+exports.sourceNodes = async ({actions, createNodeId, createContentDigest}, pluginOptions) => {
+  const {createNode} = actions;
   const jwt = new google.auth.JWT(
       pluginOptions.serviceAccountEmail,
       null,
@@ -23,27 +23,28 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, plu
     auth: jwt,
   });
 
+  let metric = pluginOptions.metric || "screenPageViews";
   await analyticsReporting.properties.runReport({
     property: `properties/${pluginOptions.property}`,
     requestBody: {
-      dimensions: [{ name: "pagePath" }],
-      metrics: [{ name: "screenPageViews" }],
-      dateRanges: [{ startDate: pluginOptions.startDate || '1970-01-01', endDate: pluginOptions.endDate || 'today' }],
+      dimensions: [{name: "pagePath"}],
+      metrics: [{name: metric}],
+      dateRanges: [{startDate: pluginOptions.startDate || '30daysAgo', endDate: pluginOptions.endDate || 'today'}],
       limit: pluginOptions.limit,
-      orderBys: [{ metric: { metricName: "screenPageViews" }, desc: pluginOptions.desc === true }],
+      orderBys: [{metric: {metricName: metric}, desc: pluginOptions.desc === true}],
     },
   }).then((report) => {
     report.data.rows.forEach(row => {
-      const screenPageViewCount = row.metricValues[0].value;
+      const totalCount = row.metricValues[0].value;
       const pagePath = row.dimensionValues[0].value;
       createNode({
         path: pagePath,
-        totalCount: Number(screenPageViewCount),
+        totalCount: Number(totalCount),
         id: createNodeId(pagePath),
         internal: {
           type: `PageViews`,
-          contentDigest: createContentDigest({ path: pagePath, totalCount: screenPageViewCount }),
-          description: `Screen page views by page path`,
+          contentDigest: createContentDigest({path: pagePath, totalCount: totalCount}),
+          description: `Metric calculation by page path`,
         },
       });
     })
