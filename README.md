@@ -31,6 +31,7 @@ plugins: [{
     endDate: `yesterday`,
     limit: 100,
     metric: `screenPageViews`,
+    regexFilter: `^/page/`,
     desc: true
   }
 }]
@@ -82,6 +83,9 @@ optional. you can skip this option. it's to limit data fetch from the API. Defau
 
 optional. you can skip this option. it's boolean value to determine you want to order the result by ascending or
 descending. Default value is true.
+
+### regexFilter
+optional. you can skip this option. it's a regex value to filter page path. for examples, you only want to filter page which starts by "/page/", then you can write regex filter value to "^/page/".
 
 ## Examples of usage
 

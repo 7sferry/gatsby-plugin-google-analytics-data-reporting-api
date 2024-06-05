@@ -25,6 +25,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, plu
 
   let metric = pluginOptions.metric || "screenPageViews";
   let dimension = metric.startsWith("organicGoogleSearch") ? "landingPagePlusQueryString" : "pagePath";
+  let regexFilter = pluginOptions.regexFilter;
   await analyticsReporting.properties
       .runReport({
         property: `properties/${pluginOptions.property}`,
@@ -32,6 +33,27 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, plu
           dimensions: [{ name: dimension }],
           metrics: [{ name: metric }],
           dateRanges: [{ startDate: pluginOptions.startDate || "30daysAgo", endDate: pluginOptions.endDate || "today" }],
+          dimensionFilter: {
+            orGroup: {
+              expressions: [
+                {
+                  orGroup: {
+                    expressions: [
+                      {
+                        filter: {
+                          fieldName: dimension,
+                          stringFilter: {
+                            matchType: "PARTIAL_REGEXP",
+                            value: regexFilter,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
           limit: pluginOptions.limit,
           orderBys: [{ metric: { metricName: metric }, desc: pluginOptions.desc === true }],
         },

@@ -108,10 +108,10 @@ googleapis-common@^7.0.0:
     url-template "^2.0.8"
     uuid "^9.0.0"
 
-googleapis@^135.1.0:
-  version "135.1.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-135.1.0.tgz#1d740ad5a9997380ea95659eae37eb79ee5266a1"
-  integrity sha512-cQ4P0ok2YJZGOW6nBFI/ZC3rjX5CAzp+onIc1O8ovIp1N7wiVW6vGJhLgB3lfUls9EqNf5yNFP4mqTT3MAYInA==
+googleapis@^139.0.0:
+  version "139.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-139.0.0.tgz#cde0b32d90ab9a28250fcb71d4d6fe7aab536d34"
+  integrity sha512-sBBCyTJOo8l2DtLZaLWbjIvuLC0HcQt3+JXpEKhYS1JXXhA/wGjBHXxHQ5UwJB0rlBhO53k/OUXug0/gfKCtBw==
   dependencies:
     google-auth-library "^9.0.0"
     googleapis-common "^7.0.0"
