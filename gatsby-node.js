@@ -63,7 +63,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, plu
           const totalCount = row.metricValues[0].value;
           const pagePath = row.dimensionValues[0].value;
           createNode({
-            path: pagePath,
+            path: decodeURIComponent(pagePath),
             totalCount: Number(totalCount),
             id: createNodeId(pagePath),
             internal: {
