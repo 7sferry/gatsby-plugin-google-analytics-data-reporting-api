@@ -8,7 +8,7 @@ const scopes = [
   "https://www.googleapis.com/auth/analytics.readonly",
 ];
 
-exports.pluginOptionsSchema = async ({ Joi }) => {
+exports.pluginOptionsSchema = ({ Joi }) => {
   return Joi.object({
     serviceAccountEmail: Joi.string()
         .required()
