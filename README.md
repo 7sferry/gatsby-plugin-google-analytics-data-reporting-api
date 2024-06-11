@@ -197,29 +197,29 @@ And in your component make an API call to "/api/trending" route and render the r
 ```jsx
 import { useEffect, useState } from "react";
 
-export const fetchTopTrending = () => {
+const TopTrending = () => {
   const [trendingReports, setTrendingReports] = useState([]);
   useEffect(() => {
-    getTopTrendingReports().then((reports) => {
-      setTrendingReports(reports);
+    getTopTrendingReports().then((nodes) => {
+      setTrendingReports(nodes);
     });
   }, []);
 
   return (
-        <ul>
-          {trendingReports.map((node) => {
-            return (
-              <li key={node.path}>
-                <small className="title">
-                  <Link className="text-link" to={`${node.path}`}>
-                    {node.path}
-                  </Link>
-                </small>
-              </li>
-            );
-          })}
-        </ul>
-  )
+    <ul>
+      {trendingReports.map((report) => {
+        return (
+          <li key={report.path}>
+            <small className="title">
+              <Link className="text-link" to={`${report.path}`}>
+                {report.path}
+              </Link>
+            </small>
+          </li>
+        );
+      })}
+    </ul>
+  );
 };
 
 async function getTopTrendingReports() {
@@ -228,15 +228,11 @@ async function getTopTrendingReports() {
     return [];
   }
   const reportNode = await response.json();
-  let reports = [];
-  for (const node of reportNode.nodes) {
-    reports.push(node);
-  }
-  return reports;
+  return reportNode.nodes;
 }
+
+export default TopTrending;
 ```
-
-
 
 ## Changelogs
 See: https://github.com/7sferry/gatsby-plugin-google-analytics-data-reporting-api/releases
