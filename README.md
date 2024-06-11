@@ -207,7 +207,7 @@ export const fetchTopTrending = () => {
 
   return (
         <ul>
-          {trendingNodes.map((node) => {
+          {trendingReports.map((node) => {
             return (
               <li key={node.path}>
                 <small className="title">
