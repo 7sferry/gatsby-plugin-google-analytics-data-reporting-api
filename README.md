@@ -212,7 +212,7 @@ export const fetchTopTrending = () => {
               <li key={node.path}>
                 <small className="title">
                   <Link className="text-link" to={`${node.path}`}>
-                    {node.title}
+                    {node.path}
                   </Link>
                 </small>
               </li>
