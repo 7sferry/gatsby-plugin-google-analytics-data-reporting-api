@@ -123,7 +123,7 @@ the response would be this:
 }
 ```
 
-## USing Client Side Analytics
+## Using Client Side Analytics
 By default, this plugin will fetch analytics in build time. so, any new data can't be fetched until next build. Doing this in runtime on client side would expose our sensitive key.
 
 Since Gatsby 5 (I used v5.13.3), we can create a middleware API on server side. We can use it to get analytics in runtime without exposing sensitive key to client.
