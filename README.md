@@ -186,7 +186,7 @@ export default async function handler(_, res) {
   };
   let reports = await getReport(opt);
   res.setHeader("Cache-Control", `public, max-age=${ttl}, stale-while-revalidate=300`).json({
-    nodes: reports,
+     reports: reports,
   });
 }
 ```
@@ -200,8 +200,8 @@ import { useEffect, useState } from "react";
 const TopTrending = () => {
   const [trendingReports, setTrendingReports] = useState([]);
   useEffect(() => {
-    getTopTrendingReports().then((nodes) => {
-      setTrendingReports(nodes);
+    getTopTrendingReports().then((reports) => {
+      setTrendingReports(reports);
     });
   }, []);
 
@@ -228,7 +228,7 @@ async function getTopTrendingReports() {
     return [];
   }
   const reportNode = await response.json();
-  return reportNode.nodes;
+  return reportNode.reports;
 }
 
 export default TopTrending;
