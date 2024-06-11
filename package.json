@@ -1,15 +1,12 @@
 {
   "name": "gatsby-plugin-google-analytics-data-reporting-api",
   "description": "Reporting API for Google Analytics 4 (GA4)",
-  "version": "1.5.3",
-  "main": "gatsby-node.js",
+  "version": "2.0.0-beta",
+  "main": "index.js",
   "author": "Ferry Suhandri",
   "license": "MIT",
   "dependencies": {
     "googleapis": "^139.0.0"
-  },
-  "scripts": {
-    "postversion": "npm info"
   },
   "keywords": [
     "gatsby",

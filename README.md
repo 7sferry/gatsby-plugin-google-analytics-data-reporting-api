@@ -123,6 +123,119 @@ the response would be this:
 }
 ```
 
+## USing Client Side Analytics
+By default, this plugin will fetch analytics in build time. so, any new data can't be fetched until next build. Doing this in runtime on client side would expose our sensitive key.
+
+Since Gatsby 5 (I used v5.13.3), we can create a middleware API on server side. We can use it to get analytics in runtime without exposing sensitive key to client.
+
+To do this we should create an api inside "src/api" directory, for example "src/api/trending.ts" (or "src/api/trending.js") for api with route: "/api/trending" and import getReport from gatsby-plugin-google-analytics-data-reporting-api.
+
+```ts
+import { GatsbyFunctionRequest, GatsbyFunctionResponse } from "gatsby";
+import {
+  getReport,
+  ReportingPluginOption,
+  TrendingReport,
+} from "gatsby-plugin-google-analytics-data-reporting-api";
+
+function getTimeToLiveExpiration() {
+   return 24 * 3600;
+}
+
+export default async function handler(_: GatsbyFunctionRequest, res: GatsbyFunctionResponse) {
+  let ttl = getTimeToLiveExpiration();
+  let opt: ReportingPluginOption = {
+    privateKey: process.env.ANALYTICS_PRIVATE_KEY,
+    property: process.env.ANALYTICS_GA4,
+    serviceAccountEmail: process.env.ANALYTICS_EMAIL,
+    desc: false,
+    endDate: "yesterday",
+    limit: 5,
+    metric: "scrolledUsers",
+    regexFilter: "^/blog/",
+    startDate: "30daysAgo",
+  };
+  let reports: TrendingReport[] = await getReport(opt);
+  res.setHeader("Cache-Control", `public, max-age=${ttl}, s-maxage=${ttl + 3600}, stale-while-revalidate=300`).json({
+    nodes: reports,
+  });
+}
+```
+or if using js:
+```js
+import {
+  getReport
+} from "gatsby-plugin-google-analytics-data-reporting-api";
+
+function getTimeToLiveExpiration() {
+	return 24 * 3600;
+}
+
+export default async function handler(_, res) {
+  let ttl = getTimeToLiveExpiration();
+  let opt = {
+    privateKey: process.env.ANALYTICS_PRIVATE_KEY,
+    property: process.env.ANALYTICS_GA4,
+    serviceAccountEmail: process.env.ANALYTICS_EMAIL,
+    desc: false,
+    endDate: "yesterday",
+    limit: 5,
+    metric: "scrolledUsers",
+    regexFilter: "^/blog/",
+    startDate: "30daysAgo",
+  };
+  let reports = await getReport(opt);
+  res.setHeader("Cache-Control", `public, max-age=${ttl}, stale-while-revalidate=300`).json({
+    nodes: reports,
+  });
+}
+```
+
+notes: better use max-age and set time to live expiration (in seconds) to cache response for better experience.
+
+And in your component make an API call to "/api/trending" route and render the result:
+```jsx
+import { useEffect, useState } from "react";
+
+export const fetchTopTrending = () => {
+  const [trendingReports, setTrendingReports] = useState([]);
+  useEffect(() => {
+    getTopTrendingReports().then((reports) => {
+      setTrendingReports(reports);
+    });
+  }, []);
+
+  return (<ul> {
+		trendingReports.map((node) => {
+           return (
+                   <li key={node.path}>
+                      <small className="title">
+                         <Link className="text-link" to={`${node.path}`}>
+                            {node.path}
+                         </Link>
+                      </small>
+                   </li>
+           );
+        })
+	}</ul>)
+};
+
+async function getTopTrendingReports() {
+  let response = await fetch("/api/trending");
+  if (response.status !== 200) {
+    return [];
+  }
+  const reportNode = await response.json();
+  let reports = [];
+  for (const node of reportNode.nodes) {
+    reports.push(node);
+  }
+  return reports;
+}
+```
+
+
+
 ## Changelogs
 See: https://github.com/7sferry/gatsby-plugin-google-analytics-data-reporting-api/releases
 
