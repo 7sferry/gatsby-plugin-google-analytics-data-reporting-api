@@ -178,11 +178,11 @@ export default async function handler(_, res) {
     property: process.env.ANALYTICS_GA4,
     serviceAccountEmail: process.env.ANALYTICS_EMAIL,
     desc: false,
+    startDate: "30daysAgo",
     endDate: "yesterday",
     limit: 5,
     metric: "scrolledUsers",
     regexFilter: "^/blog/",
-    startDate: "30daysAgo",
   };
   let reports = await getReport(opt);
   res.setHeader("Cache-Control", `public, max-age=${ttl}, stale-while-revalidate=300`).json({
