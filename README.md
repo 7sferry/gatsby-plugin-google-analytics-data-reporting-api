@@ -205,19 +205,21 @@ export const fetchTopTrending = () => {
     });
   }, []);
 
-  return (<ul> {
-		trendingReports.map((node) => {
-           return (
-                   <li key={node.path}>
-                      <small className="title">
-                         <Link className="text-link" to={`${node.path}`}>
-                            {node.path}
-                         </Link>
-                      </small>
-                   </li>
-           );
-        })
-	}</ul>)
+  return (
+        <ul>
+          {trendingNodes.map((node) => {
+            return (
+              <li key={node.path}>
+                <small className="title">
+                  <Link className="text-link" to={`${node.path}`}>
+                    {node.title}
+                  </Link>
+                </small>
+              </li>
+            );
+          })}
+        </ul>
+  )
 };
 
 async function getTopTrendingReports() {
