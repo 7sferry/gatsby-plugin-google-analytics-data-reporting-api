@@ -2,10 +2,7 @@
 
 ## Description
 
-This is Reporting API plugin to get your page views count from Google Analytics Data API (GA4). I used to
-use "https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics-reporter" for my blog, but it's only support
-Universal Analytics v4. Since Universal Analytics would be deprecated soon, and I didn't found the replacement for GA4
-yet, so I decide to create one.
+This is Reporting API plugin to get your page views count from Google Analytics Data API (GA4). Since Universal Analytics is deprecated, so I decide to create one.
 
 ## How to install
 
