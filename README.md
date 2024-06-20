@@ -200,9 +200,7 @@ import { useEffect, useState } from "react";
 const TopTrending = () => {
   const [trendingReports, setTrendingReports] = useState([]);
   useEffect(() => {
-    getTopTrendingReports().then((reports) => {
-      setTrendingReports(reports);
-    });
+    getTopTrendingReports().then(setTrendingReports);
   }, []);
 
   return (
