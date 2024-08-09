@@ -1,12 +1,4 @@
-const { google } = require("googleapis");
-
-const scopes = [
-  // View and manage your Google Analytics data
-  "https://www.googleapis.com/auth/analytics",
-
-  // See and download your Google Analytics data
-  "https://www.googleapis.com/auth/analytics.readonly",
-];
+const { executeAnalytics } = require("./index.js");
 
 exports.pluginOptionsSchema = ({ Joi }) => {
   return Joi.object({
@@ -28,6 +20,9 @@ exports.pluginOptionsSchema = ({ Joi }) => {
     metric: Joi.string().description(
         `Metric calculation for reporting. Default value is 'screenPageViews' to calculate metric of the number of app screens or web pages your users viewed. Repeated views of a single page or screen are counted. Since v1.1.0 we can use custom metric like 'totalUsers' to calculate based on distinct users, or 'scrolledUsers' to calculate based on total users who scrolled your pages to at least 90% of page. Visit "https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics" for more info about metric values can be used.`
     ),
+    dimension: Joi.string().description(
+        `Dimension for reporting. Default value is 'pagePath' as path your users viewed or 'landingPagePlusQueryString' if metric is 'organicGoogleSearch'. Visit "https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions" for more info about dimension values can be used.`
+    ),
     limit: Joi.number()
         .min(1)
         .description(
@@ -45,53 +40,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, pluginOptions) => {
   try {
     const { createNode } = actions;
-    const jwt = new google.auth.JWT(
-        pluginOptions.serviceAccountEmail,
-        null,
-        pluginOptions.privateKey.replace(/\\n/gm, "\n"),
-        scopes
-    );
-    await jwt.authorize();
-
-    const analyticsReporting = google.analyticsdata({
-      version: "v1beta",
-      auth: jwt,
-    });
-
-    let metric = pluginOptions.metric || "screenPageViews";
-    let dimension = metric.startsWith("organicGoogleSearch") ? "landingPagePlusQueryString" : "pagePath";
-    let regexFilter = pluginOptions.regexFilter;
-    let report = await analyticsReporting.properties.runReport({
-      property: `properties/${pluginOptions.property}`,
-      requestBody: {
-        dimensions: [{ name: dimension }],
-        metrics: [{ name: metric }],
-        dateRanges: [{ startDate: pluginOptions.startDate || "30daysAgo", endDate: pluginOptions.endDate || "today" }],
-        dimensionFilter: {
-          orGroup: {
-            expressions: [
-              {
-                orGroup: {
-                  expressions: [
-                    {
-                      filter: {
-                        fieldName: dimension,
-                        stringFilter: {
-                          matchType: "PARTIAL_REGEXP",
-                          value: regexFilter,
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-        limit: pluginOptions.limit,
-        orderBys: [{ metric: { metricName: metric }, desc: pluginOptions.desc === true }],
-      },
-    });
+    let report = await executeAnalytics(pluginOptions);
     report.data.rows.forEach((row) => {
       const totalCount = row.metricValues[0].value;
       const pagePath = row.dimensionValues[0].value;
