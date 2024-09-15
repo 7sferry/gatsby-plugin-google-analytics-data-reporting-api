@@ -13,17 +13,16 @@ const scopes = [
   "https://www.googleapis.com/auth/analytics.readonly",
 ];
 
+const constructReport = row => {
+  return {
+    path: decodeURIComponent(String(row?.dimensionValues?.[0]?.value)),
+    value: Number(row?.metricValues?.[0].value),
+  };
+}
+
 async function getReport(pluginOptions) {
   let report = await executeAnalytics(pluginOptions);
-  const reports = [];
-  const rows = report.data.rows ?? [];
-  for (const row of rows) {
-    reports.push({
-      path: decodeURIComponent(String(row?.dimensionValues?.[0]?.value)),
-      value: Number(row?.metricValues?.[0].value),
-    });
-  }
-  return reports;
+  return report.data.rows?.map(constructReport) || [];
 }
 
 async function executeAnalytics(pluginOptions) {
@@ -50,7 +49,7 @@ async function executeAnalytics(pluginOptions) {
     requestBody: {
       dimensions: [{ name: dimension }],
       metrics: [{ name: metric }],
-      dateRanges: [{ startDate: pluginOptions.startDate || "30daysAgo", endDate: pluginOptions.endDate || "today" }],
+      dateRanges: [{ startDate: pluginOptions.startDate || "365daysAgo", endDate: pluginOptions.endDate || "today" }],
       dimensionFilter: {
         orGroup: {
           expressions: [
