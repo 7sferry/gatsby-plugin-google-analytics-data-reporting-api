@@ -1,6 +1,6 @@
-const { executeAnalytics } = require("./index.js");
+import {executeAnalytics} from "./index.js";
 
-exports.pluginOptionsSchema = ({ Joi }) => {
+export function pluginOptionsSchema({Joi}) {
   return Joi.object({
     serviceAccountEmail: Joi.string()
         .required()
@@ -35,9 +35,9 @@ exports.pluginOptionsSchema = ({ Joi }) => {
         `you can skip this option. it's a regex value to filter page path. for examples, you only want to filter page which starts by "/page/", then you can write regex filter value to "^/page/".`
     ),
   });
-};
+}
 
-exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, pluginOptions) => {
+export async function sourceNodes({actions, createNodeId, createContentDigest}, pluginOptions) {
   try {
     const { createNode } = actions;
     let report = await executeAnalytics(pluginOptions);
@@ -58,4 +58,4 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, plu
   } catch (err) {
     console.error("failed to ge analytics report. " + err);
   }
-};
+}

@@ -1,9 +1,10 @@
 "use strict";
 
-const { google } = require("googleapis");
-exports.__esModule = true;
-exports.getReport = getReport;
-exports.executeAnalytics = executeAnalytics;
+import {google} from "googleapis";
+
+export const __esModule = true;
+export {getReport}
+export {executeAnalytics}
 
 const scopes = [
   // View and manage your Google Analytics data
@@ -26,12 +27,12 @@ async function getReport(pluginOptions) {
 }
 
 async function executeAnalytics(pluginOptions) {
-  const jwt = new google.auth.JWT(
-    pluginOptions.serviceAccountEmail,
-    undefined,
-    pluginOptions.privateKey.replace(/\\n/gm, "\n"),
-    scopes
-  );
+  const jwt = new google.auth.JWT({
+        email: pluginOptions.serviceAccountEmail,
+        key: pluginOptions.privateKey.replace(/\\n/gm, "\n"),
+        scopes: scopes,
+        subject: pluginOptions.serviceAccountEmail
+      });
   await jwt.authorize();
 
   const analyticsReporting = google.analyticsdata({
