@@ -7,7 +7,7 @@
   "type": "module",
   "license": "MIT",
   "dependencies": {
-    "googleapis": "^171.4.0"
+    "googleapis": "^173.0.0"
   },
   "keywords": [
     "gatsby",
